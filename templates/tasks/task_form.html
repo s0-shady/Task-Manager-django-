@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Task{% endblock %}
+
+{% block content %}
+<h1>{{ action }} Task</h1>
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="{{ form.title.id_for_label }}">Title:</label>
+        {{ form.title }}
+        {% if form.title.errors %}
+            <div style="color: red;">{{ form.title.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.content.id_for_label }}">Content:</label>
+        {{ form.content }}
+        {% if form.content.errors %}
+            <div style="color: red;">{{ form.content.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.date_added.id_for_label }}">Date Added:</label>
+        {{ form.date_added }}
+        {% if form.date_added.errors %}
+            <div style="color: red;">{{ form.date_added.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="form-group">
+        <label for="{{ form.priority.id_for_label }}">Priority:</label>
+        {{ form.priority }}
+        {% if form.priority.errors %}
+            <div style="color: red;">{{ form.priority.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{% url 'task_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

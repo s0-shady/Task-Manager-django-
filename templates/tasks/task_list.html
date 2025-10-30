@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+<h1>Task Management</h1>
+
+<div class="add-button">
+    <a href="{% url 'task_create' %}" class="btn">Add Task</a>
+</div>
+
+<h2>Uncompleted Tasks</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Date Added</th>
+            <th>Priority</th>
+            <th>Completion Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in uncompleted_tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.date_added|date:"Y-m-d" }}</td>
+            <td>{{ task.priority.name }}</td>
+            <td>-</td>
+            <td>
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-small btn-secondary">Show Details</a>
+                <a href="{% url 'task_update' task.id %}" class="btn btn-small">Edit</a>
+                <a href="{% url 'task_delete' task.id %}" class="btn btn-small btn-danger">Delete</a>
+                <a href="{% url 'task_complete' task.id %}" class="btn btn-small btn-success">Complete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No uncompleted tasks.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Completed Tasks</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Date Added</th>
+            <th>Priority</th>
+            <th>Completion Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in completed_tasks %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.date_added|date:"Y-m-d" }}</td>
+            <td>{{ task.priority.name }}</td>
+            <td>{{ task.completion_date|date:"Y-m-d" }}</td>
+            <td>
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-small btn-secondary">Show Details</a>
+                <a href="{% url 'task_update' task.id %}" class="btn btn-small">Edit</a>
+                <a href="{% url 'task_delete' task.id %}" class="btn btn-small btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No completed tasks.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

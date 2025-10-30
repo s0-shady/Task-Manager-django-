@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Task Details{% endblock %}
+
+{% block content %}
+<h1>Task Details</h1>
+
+<div class="detail-box">
+    <p><span class="detail-label">ID:</span>{{ task.id }}</p>
+</div>
+
+<div class="detail-box">
+    <p><span class="detail-label">Title:</span>{{ task.title }}</p>
+</div>
+
+<div class="detail-box">
+    <p><span class="detail-label">Content:</span></p>
+    <p>{{ task.content|default:"No content provided" }}</p>
+</div>
+
+<div class="detail-box">
+    <p><span class="detail-label">Date Added:</span>{{ task.date_added|date:"Y-m-d" }}</p>
+</div>
+
+<div class="detail-box">
+    <p><span class="detail-label">Priority:</span>{{ task.priority.name }} (Weight: {{ task.priority.weight }})</p>
+</div>
+
+<div class="detail-box">
+    <p><span class="detail-label">Completion Date:</span>
+    {% if task.completion_date %}
+        {{ task.completion_date|date:"Y-m-d" }}
+    {% else %}
+        Not completed yet
+    {% endif %}
+    </p>
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'task_list' %}" class="btn btn-secondary">Back to List</a>
+    <a href="{% url 'task_update' task.id %}" class="btn">Edit</a>
+    {% if not task.completion_date %}
+    <a href="{% url 'task_complete' task.id %}" class="btn btn-success">Complete</a>
+    {% endif %}
+    <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">Delete</a>
+</div>
+{% endblock %}

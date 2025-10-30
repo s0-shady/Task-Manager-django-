@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Priority{% endblock %}
+
+{% block content %}
+<h1>Delete Priority</h1>
+
+<div class="confirm-box">
+    <p>Are you sure you want to delete priority '<strong>{{ priority.name }}</strong>'?</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'priority_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
