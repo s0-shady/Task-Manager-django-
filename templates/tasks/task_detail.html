@@ -1,47 +1,71 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Task Details{% endblock %}
+{% block title %}{% trans "Task Details" %} - {{ task.title }}{% endblock %}
 
 {% block content %}
-<h1>Task Details</h1>
+<h1>{% trans "Task Details" %}</h1>
 
 <div class="detail-box">
-    <p><span class="detail-label">ID:</span>{{ task.id }}</p>
+    <span class="detail-label">ID:</span> {{ task.id }}
 </div>
 
 <div class="detail-box">
-    <p><span class="detail-label">Title:</span>{{ task.title }}</p>
+    <span class="detail-label">{% trans "Title" %}:</span> {{ task.title }}
 </div>
 
 <div class="detail-box">
-    <p><span class="detail-label">Content:</span></p>
-    <p>{{ task.content|default:"No content provided" }}</p>
+    <span class="detail-label">{% trans "Content" %}:</span> {{ task.content|default:"-"|linebreaks }}
 </div>
 
 <div class="detail-box">
-    <p><span class="detail-label">Date Added:</span>{{ task.date_added|date:"Y-m-d" }}</p>
+    <span class="detail-label">{% trans "Date Added" %}:</span> {{ task.date_added|date:"Y-m-d" }}
 </div>
 
 <div class="detail-box">
-    <p><span class="detail-label">Priority:</span>{{ task.priority.name }} (Weight: {{ task.priority.weight }})</p>
+    <span class="detail-label">{% trans "Priority" %}:</span> {{ task.priority.name }}
 </div>
 
 <div class="detail-box">
-    <p><span class="detail-label">Completion Date:</span>
+    <span class="detail-label">{% trans "Completion Date" %}:</span> 
     {% if task.completion_date %}
         {{ task.completion_date|date:"Y-m-d" }}
     {% else %}
-        Not completed yet
+        -
     {% endif %}
-    </p>
+</div>
+
+<!-- TAS-3: Attachments section -->
+<div class="attachments-section">
+    <h2>{% trans "Attachments" %}</h2>
+    
+    <div class="add-button">
+        <a href="{% url 'attachment_add' task.id %}" class="btn">{% trans "Add Attachment" %}</a>
+    </div>
+    
+    {% if attachments %}
+    <ul class="attachment-list">
+        {% for attachment in attachments %}
+        <li class="attachment-item">
+            <a href="{{ attachment.file.url }}" target="_blank">{{ attachment.filename }}</a>
+            <span>{{ attachment.uploaded_at|date:"Y-m-d H:i" }}</span>
+            <a href="{% url 'attachment_delete' attachment.id %}" class="btn btn-small btn-danger">{% trans "Delete" %}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>{% trans "No attachments." %}</p>
+    {% endif %}
 </div>
 
 <div style="margin-top: 20px;">
-    <a href="{% url 'task_list' %}" class="btn btn-secondary">Back to List</a>
-    <a href="{% url 'task_update' task.id %}" class="btn">Edit</a>
-    {% if not task.completion_date %}
-    <a href="{% url 'task_complete' task.id %}" class="btn btn-success">Complete</a>
+    <a href="{% url 'task_update' task.id %}" class="btn">{% trans "Edit" %}</a>
+    {% if task.completion_date %}
+        <a href="{% url 'task_restore' task.id %}" class="btn btn-warning">{% trans "Restore" %}</a>
+    {% else %}
+        <a href="{% url 'task_complete' task.id %}" class="btn btn-success">{% trans "Complete" %}</a>
     {% endif %}
-    <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">Delete</a>
+    <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">{% trans "Delete" %}</a>
+    <a href="{% url 'task_list' %}" class="btn btn-secondary">{% trans "Back to List" %}</a>
 </div>
 {% endblock %}

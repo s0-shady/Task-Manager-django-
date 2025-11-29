@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Restore Task" %}{% endblock %}
+
+{% block content %}
+<h1>{% trans "Restore Task" %}</h1>
+
+<div class="confirm-box">
+    <p>{% blocktrans with title=task.title %}Are you sure you want to restore the task "{{ title }}" to uncompleted status?{% endblocktrans %}</p>
+    <p>{% trans "This will remove the completion date and move the task back to the uncompleted list." %}</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning">{% trans "Confirm Restore" %}</button>
+    <a href="{% url 'task_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+</form>
+{% endblock %}

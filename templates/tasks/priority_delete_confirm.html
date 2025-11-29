@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Delete Priority{% endblock %}
+{% block title %}{% trans "Delete Priority" %}{% endblock %}
 
 {% block content %}
-<h1>Delete Priority</h1>
+<h1>{% trans "Delete Priority" %}</h1>
 
 <div class="confirm-box">
-    <p>Are you sure you want to delete priority '<strong>{{ priority.name }}</strong>'?</p>
+    <p>{% blocktrans with name=priority.name %}Are you sure you want to delete the priority "{{ name }}"?{% endblocktrans %}</p>
 </div>
 
 <form method="post">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Yes, Delete</button>
-    <a href="{% url 'priority_list' %}" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-danger">{% trans "Confirm Delete" %}</button>
+    <a href="{% url 'priority_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
 </form>
 {% endblock %}

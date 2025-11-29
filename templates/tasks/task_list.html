@@ -1,80 +1,95 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Task List{% endblock %}
+{% block title %}{% trans "Task List" %}{% endblock %}
 
 {% block content %}
-<h1>Task Management</h1>
+<h1>{% trans "Task Management" %}</h1>
 
 <div class="add-button">
-    <a href="{% url 'task_create' %}" class="btn">Add Task</a>
+    <a href="{% url 'task_create' %}" class="btn">{% trans "Add Task" %}</a>
 </div>
 
-<h2>Uncompleted Tasks</h2>
-<table>
+<h2>{% trans "Uncompleted Tasks" %}</h2>
+<table id="uncompleted-tasks-table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Date Added</th>
-            <th>Priority</th>
-            <th>Completion Date</th>
-            <th>Actions</th>
+            <th class="sortable" data-sort="id">ID <span class="sort-icon"></span></th>
+            <th class="sortable" data-sort="title">{% trans "Title" %} <span class="sort-icon"></span></th>
+            <th class="sortable" data-sort="date_added">{% trans "Date Added" %} <span class="sort-icon"></span></th>
+            <th class="sortable" data-sort="priority">{% trans "Priority" %} <span class="sort-icon"></span></th>
+            <th>{% trans "Completion Date" %}</th>
+            <th class="no-sort">{% trans "Actions" %}</th>
         </tr>
     </thead>
     <tbody>
         {% for task in uncompleted_tasks %}
-        <tr>
+        <tr data-task-id="{{ task.id }}">
             <td>{{ task.id }}</td>
             <td>{{ task.title }}</td>
             <td>{{ task.date_added|date:"Y-m-d" }}</td>
             <td>{{ task.priority.name }}</td>
             <td>-</td>
             <td>
-                <a href="{% url 'task_detail' task.id %}" class="btn btn-small btn-secondary">Show Details</a>
-                <a href="{% url 'task_update' task.id %}" class="btn btn-small">Edit</a>
-                <a href="{% url 'task_delete' task.id %}" class="btn btn-small btn-danger">Delete</a>
-                <a href="{% url 'task_complete' task.id %}" class="btn btn-small btn-success">Complete</a>
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-small btn-secondary">{% trans "Details" %}</a>
+                <a href="{% url 'task_update' task.id %}" class="btn btn-small">{% trans "Edit" %}</a>
+                <a href="{% url 'task_delete' task.id %}" class="btn btn-small btn-danger">{% trans "Delete" %}</a>
+                <a href="{% url 'task_complete' task.id %}" class="btn btn-small btn-success">{% trans "Complete" %}</a>
             </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="6">No uncompleted tasks.</td>
+            <td colspan="6">{% trans "No uncompleted tasks." %}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<h2>Completed Tasks</h2>
-<table>
+<h2>{% trans "Completed Tasks" %}</h2>
+<table id="completed-tasks-table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Date Added</th>
-            <th>Priority</th>
-            <th>Completion Date</th>
-            <th>Actions</th>
+            <th class="sortable" data-sort="id">ID <span class="sort-icon"></span></th>
+            <th class="sortable" data-sort="title">{% trans "Title" %} <span class="sort-icon"></span></th>
+            <th class="sortable" data-sort="date_added">{% trans "Date Added" %} <span class="sort-icon"></span></th>
+            <th class="sortable" data-sort="priority">{% trans "Priority" %} <span class="sort-icon"></span></th>
+            <th class="sortable" data-sort="completion_date">{% trans "Completion Date" %} <span class="sort-icon"></span></th>
+            <th class="no-sort">{% trans "Actions" %}</th>
         </tr>
     </thead>
     <tbody>
         {% for task in completed_tasks %}
-        <tr>
+        <tr data-task-id="{{ task.id }}">
             <td>{{ task.id }}</td>
             <td>{{ task.title }}</td>
             <td>{{ task.date_added|date:"Y-m-d" }}</td>
             <td>{{ task.priority.name }}</td>
             <td>{{ task.completion_date|date:"Y-m-d" }}</td>
             <td>
-                <a href="{% url 'task_detail' task.id %}" class="btn btn-small btn-secondary">Show Details</a>
-                <a href="{% url 'task_update' task.id %}" class="btn btn-small">Edit</a>
-                <a href="{% url 'task_delete' task.id %}" class="btn btn-small btn-danger">Delete</a>
+                <a href="{% url 'task_detail' task.id %}" class="btn btn-small btn-secondary">{% trans "Details" %}</a>
+                <a href="{% url 'task_update' task.id %}" class="btn btn-small">{% trans "Edit" %}</a>
+                <a href="{% url 'task_delete' task.id %}" class="btn btn-small btn-danger">{% trans "Delete" %}</a>
+                <!-- TAS-4: Restore button -->
+                <a href="{% url 'task_restore' task.id %}" class="btn btn-small btn-warning">{% trans "Restore" %}</a>
             </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="6">No completed tasks.</td>
+            <td colspan="6">{% trans "No completed tasks." %}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% endblock %}
+
+{% block scripts %}
+<!-- TAS-2: JavaScript for sorting -->
+<script src="{% url 'task_list' %}../static/js/task_sorting.js"></script>
+<script>
+    // Initialize sorting for both tables
+    document.addEventListener('DOMContentLoaded', function() {
+        initTableSorting('uncompleted-tasks-table', '{% url "api_tasks_uncompleted" %}');
+        initTableSorting('completed-tasks-table', '{% url "api_tasks_completed" %}');
+    });
+</script>
 {% endblock %}

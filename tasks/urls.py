@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import api_views
 
 urlpatterns = [
     # Task URLs
@@ -9,10 +10,19 @@ urlpatterns = [
     path('task/<int:pk>/edit/', views.task_update, name='task_update'),
     path('task/<int:pk>/delete/', views.task_delete_confirm, name='task_delete'),
     path('task/<int:pk>/complete/', views.task_complete_confirm, name='task_complete'),
+    path('task/<int:pk>/restore/', views.task_restore_confirm, name='task_restore'),  # TAS-4
+    
+    # Attachment URLs (TAS-3)
+    path('task/<int:task_pk>/attachment/add/', views.attachment_add, name='attachment_add'),
+    path('attachment/<int:pk>/delete/', views.attachment_delete, name='attachment_delete'),
     
     # Priority URLs
     path('priorities/', views.priority_list, name='priority_list'),
     path('priority/add/', views.priority_create, name='priority_create'),
     path('priority/<int:pk>/edit/', views.priority_update, name='priority_update'),
     path('priority/<int:pk>/delete/', views.priority_delete_confirm, name='priority_delete'),
+    
+    # REST API URLs (TAS-2)
+    path('api/tasks/uncompleted/', api_views.api_tasks_uncompleted, name='api_tasks_uncompleted'),
+    path('api/tasks/completed/', api_views.api_tasks_completed, name='api_tasks_completed'),
 ]

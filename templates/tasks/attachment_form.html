@@ -1,22 +1,19 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{{ action }} {% trans "Priority" %}{% endblock %}
+{% block title %}{% trans "Add Attachment" %}{% endblock %}
 
 {% block content %}
-<h1>{{ action }} {% trans "Priority" %}</h1>
+<h1>{% trans "Add Attachment" %}</h1>
 
-<form method="post">
+<p>{% blocktrans with title=task.title %}Adding attachment to task: {{ title }}{% endblocktrans %}</p>
+
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     
     <div class="form-group">
-        <label for="id_name">{% trans "Name" %}</label>
-        {{ form.name }}
-    </div>
-    
-    <div class="form-group">
-        <label for="id_weight">{% trans "Weight" %}</label>
-        {{ form.weight }}
+        <label for="id_file">{% trans "File" %}</label>
+        {{ form.file }}
     </div>
     
     {% if form.errors %}
@@ -31,7 +28,7 @@
     </div>
     {% endif %}
     
-    <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
-    <a href="{% url 'priority_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+    <button type="submit" class="btn btn-success">{% trans "Upload" %}</button>
+    <a href="{% url 'task_detail' task.id %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
 </form>
 {% endblock %}

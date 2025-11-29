@@ -1,0 +1,195 @@
+# Polish translations for Task Manager
+# TAS-1: Internationalization
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pl\n"
+
+msgid "Task Manager"
+msgstr "Menadżer Zadań"
+
+msgid "Tasks"
+msgstr "Zadania"
+
+msgid "Priorities"
+msgstr "Priorytety"
+
+msgid "Task List"
+msgstr "Lista Zadań"
+
+msgid "Task Management"
+msgstr "Zarządzanie Zadaniami"
+
+msgid "Add Task"
+msgstr "Dodaj Zadanie"
+
+msgid "Uncompleted Tasks"
+msgstr "Nieukończone Zadania"
+
+msgid "Completed Tasks"
+msgstr "Ukończone Zadania"
+
+msgid "Title"
+msgstr "Tytuł"
+
+msgid "Content"
+msgstr "Treść"
+
+msgid "Date Added"
+msgstr "Data Dodania"
+
+msgid "Priority"
+msgstr "Priorytet"
+
+msgid "Completion Date"
+msgstr "Data Ukończenia"
+
+msgid "Actions"
+msgstr "Akcje"
+
+msgid "Details"
+msgstr "Szczegóły"
+
+msgid "Edit"
+msgstr "Edytuj"
+
+msgid "Delete"
+msgstr "Usuń"
+
+msgid "Complete"
+msgstr "Ukończ"
+
+msgid "Restore"
+msgstr "Przywróć"
+
+msgid "No uncompleted tasks."
+msgstr "Brak nieukończonych zadań."
+
+msgid "No completed tasks."
+msgstr "Brak ukończonych zadań."
+
+msgid "Task Details"
+msgstr "Szczegóły Zadania"
+
+msgid "Back to List"
+msgstr "Powrót do Listy"
+
+msgid "Add"
+msgstr "Dodaj"
+
+msgid "Task"
+msgstr "Zadanie"
+
+msgid "Save"
+msgstr "Zapisz"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Delete Task"
+msgstr "Usuń Zadanie"
+
+#, python-format
+msgid "Are you sure you want to delete the task \"%(title)s\"?"
+msgstr "Czy na pewno chcesz usunąć zadanie \"%(title)s\"?"
+
+msgid "Confirm Delete"
+msgstr "Potwierdź Usunięcie"
+
+msgid "Complete Task"
+msgstr "Ukończ Zadanie"
+
+#, python-format
+msgid "Are you sure you want to mark the task \"%(title)s\" as completed?"
+msgstr "Czy na pewno chcesz oznaczyć zadanie \"%(title)s\" jako ukończone?"
+
+msgid "Confirm Complete"
+msgstr "Potwierdź Ukończenie"
+
+msgid "Restore Task"
+msgstr "Przywróć Zadanie"
+
+#, python-format
+msgid "Are you sure you want to restore the task \"%(title)s\" to uncompleted status?"
+msgstr "Czy na pewno chcesz przywrócić zadanie \"%(title)s\" do statusu nieukończonego?"
+
+msgid "This will remove the completion date and move the task back to the uncompleted list."
+msgstr "To usunie datę ukończenia i przeniesie zadanie z powrotem do listy nieukończonych."
+
+msgid "Confirm Restore"
+msgstr "Potwierdź Przywrócenie"
+
+msgid "Priority List"
+msgstr "Lista Priorytetów"
+
+msgid "Priority Management"
+msgstr "Zarządzanie Priorytetami"
+
+msgid "Add Priority"
+msgstr "Dodaj Priorytet"
+
+msgid "Name"
+msgstr "Nazwa"
+
+msgid "Weight"
+msgstr "Waga"
+
+msgid "No priorities defined."
+msgstr "Brak zdefiniowanych priorytetów."
+
+msgid "Delete Priority"
+msgstr "Usuń Priorytet"
+
+#, python-format
+msgid "Are you sure you want to delete the priority \"%(name)s\"?"
+msgstr "Czy na pewno chcesz usunąć priorytet \"%(name)s\"?"
+
+msgid "Attachments"
+msgstr "Załączniki"
+
+msgid "Add Attachment"
+msgstr "Dodaj Załącznik"
+
+msgid "No attachments."
+msgstr "Brak załączników."
+
+msgid "File"
+msgstr "Plik"
+
+#, python-format
+msgid "Adding attachment to task: %(title)s"
+msgstr "Dodawanie załącznika do zadania: %(title)s"
+
+msgid "Upload"
+msgstr "Prześlij"
+
+msgid "Delete Attachment"
+msgstr "Usuń Załącznik"
+
+#, python-format
+msgid "Are you sure you want to delete the attachment \"%(filename)s\"?"
+msgstr "Czy na pewno chcesz usunąć załącznik \"%(filename)s\"?"
+
+msgid "This action cannot be undone."
+msgstr "Tej akcji nie można cofnąć."
+
+msgid "Task not found"
+msgstr "Nie znaleziono zadania"
+
+msgid "Task not found or already completed"
+msgstr "Nie znaleziono zadania lub jest już ukończone"
+
+msgid "Task not found or not completed"
+msgstr "Nie znaleziono zadania lub nie jest ukończone"
+
+msgid "Priority not found"
+msgstr "Nie znaleziono priorytetu"
+
+msgid "Attachment not found"
+msgstr "Nie znaleziono załącznika"
+
+msgid "English"
+msgstr "Angielski"
+
+msgid "Polish"
+msgstr "Polski"

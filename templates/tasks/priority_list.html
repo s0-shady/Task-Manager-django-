@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Priority List{% endblock %}
+{% block title %}{% trans "Priority List" %}{% endblock %}
 
 {% block content %}
-<h1>Priority Management</h1>
+<h1>{% trans "Priority Management" %}</h1>
 
 <div class="add-button">
-    <a href="{% url 'priority_create' %}" class="btn">Add Priority</a>
+    <a href="{% url 'priority_create' %}" class="btn">{% trans "Add Priority" %}</a>
 </div>
 
 <table>
     <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Weight</th>
-            <th>Actions</th>
+            <th>{% trans "Name" %}</th>
+            <th>{% trans "Weight" %}</th>
+            <th>{% trans "Actions" %}</th>
         </tr>
     </thead>
     <tbody>
@@ -25,13 +26,13 @@
             <td>{{ priority.name }}</td>
             <td>{{ priority.weight }}</td>
             <td>
-                <a href="{% url 'priority_update' priority.id %}" class="btn btn-small">Edit</a>
-                <a href="{% url 'priority_delete' priority.id %}" class="btn btn-small btn-danger">Delete</a>
+                <a href="{% url 'priority_update' priority.id %}" class="btn btn-small">{% trans "Edit" %}</a>
+                <a href="{% url 'priority_delete' priority.id %}" class="btn btn-small btn-danger">{% trans "Delete" %}</a>
             </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="4">No priorities found.</td>
+            <td colspan="4">{% trans "No priorities defined." %}</td>
         </tr>
         {% endfor %}
     </tbody>

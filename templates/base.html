@@ -1,9 +1,11 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Task Manager{% endblock %}</title>
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}{% trans "Task Manager" %}{% endblock %}</title>
     <style>
         * {
             margin: 0;
@@ -22,9 +24,12 @@
             padding: 15px;
             margin-bottom: 30px;
             border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        nav a {
+        .nav-links a {
             color: white;
             text-decoration: none;
             padding: 10px 20px;
@@ -32,9 +37,37 @@
             display: inline-block;
         }
         
-        nav a:hover {
+        .nav-links a:hover {
             background-color: #555;
             border-radius: 3px;
+        }
+        
+        /* TAS-1: Language switcher */
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .language-switcher form {
+            display: inline;
+        }
+        
+        .lang-btn {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .lang-btn:hover {
+            background-color: #777;
+        }
+        
+        .lang-btn.active {
+            background-color: #007bff;
         }
         
         .container {
@@ -66,6 +99,22 @@
         table th {
             background-color: #f8f8f8;
             font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        /* TAS-2: Sortable columns */
+        table th.sortable:hover {
+            background-color: #e8e8e8;
+        }
+        
+        table th .sort-icon {
+            margin-left: 5px;
+            font-size: 12px;
+        }
+        
+        table th.no-sort {
+            cursor: default;
         }
         
         table tr:hover {
@@ -110,6 +159,15 @@
         
         .btn-secondary:hover {
             background-color: #5a6268;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
         }
         
         .btn-small {
@@ -159,17 +217,74 @@
             font-weight: bold;
             margin-right: 10px;
         }
+        
+        /* TAS-3: Attachment styles */
+        .attachments-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .attachment-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .attachment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            margin-bottom: 5px;
+            border-radius: 3px;
+        }
+        
+        .attachment-item a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .attachment-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
     <nav>
-        <a href="{% url 'task_list' %}">Tasks</a>
-        <a href="{% url 'priority_list' %}">Priorities</a>
+        <div class="nav-links">
+            <a href="{% url 'task_list' %}">{% trans "Tasks" %}</a>
+            <a href="{% url 'priority_list' %}">{% trans "Priorities" %}</a>
+        </div>
+        
+        <!-- TAS-1: Language switcher -->
+        <div class="language-switcher">
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="language" value="en">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button type="submit" class="lang-btn {% if LANGUAGE_CODE == 'en' %}active{% endif %}" title="English">🇬🇧 EN</button>
+            </form>
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="language" value="pl">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button type="submit" class="lang-btn {% if LANGUAGE_CODE == 'pl' %}active{% endif %}" title="Polski">🇵🇱 PL</button>
+            </form>
+        </div>
     </nav>
     
     <div class="container">
         {% block content %}
         {% endblock %}
     </div>
+    
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>
